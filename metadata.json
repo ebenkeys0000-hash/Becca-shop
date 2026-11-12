@@ -1,0 +1,6 @@
+{
+  "name": "BECCA SHOP – Pagnes & Chaussures Femmes",
+  "description": "Boutique e-commerce de prestige à Comé, Bénin. Vente de pagnes africains de luxe et chaussures pour femmes. Qualité • Élégance • Votre style, notre priorité.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
