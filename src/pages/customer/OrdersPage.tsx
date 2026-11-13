@@ -5,6 +5,7 @@ import { useStore } from '../../context/StoreContext';
 import { formatFCFA, formatDate } from '../../utils/formatters';
 import { STORE_INFO } from '../../data/products';
 import { OrderDetails } from '../../types';
+import { SafeImage } from '../../components/SafeImage';
 import {
   Package,
   Calendar,
@@ -165,7 +166,12 @@ export const OrdersPage: React.FC = () => {
                       {order.items.map((item, idx) => (
                         <div key={idx} className="flex items-center gap-3 text-xs">
                           <div className="w-12 h-14 rounded-lg bg-black overflow-hidden shrink-0 border border-[#2b2b3a]">
-                            <img src={item.product.images[0]} alt="" className="w-full h-full object-cover" />
+                            <SafeImage
+                              src={item.product.images[0]}
+                              alt={item.product.name}
+                              compactFallback
+                              className="w-full h-full object-cover"
+                            />
                           </div>
                           <div>
                             <div className="font-medium text-white line-clamp-1">{item.product.name}</div>
@@ -222,7 +228,12 @@ export const OrdersPage: React.FC = () => {
                 <div className="flex items-center justify-between border-b border-[#242436] pb-4">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-black border border-[#d4af37]/40 p-1">
-                      <img src={STORE_INFO.logoUrl} alt="BECCA SHOP" className="w-full h-full object-cover rounded-full" />
+                      <SafeImage
+                        src={STORE_INFO.logoUrl}
+                        alt="Logo BECCA SHOP"
+                        compactFallback
+                        className="w-full h-full object-cover rounded-full"
+                      />
                     </div>
                     <div>
                       <h3 className="font-luxury text-lg font-bold text-white">Facture Officielle BECCA SHOP</h3>

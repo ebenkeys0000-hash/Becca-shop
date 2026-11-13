@@ -1,9 +1,10 @@
 import { Product } from '../types';
+import { ASSET_IMAGES, OFFICIAL_LOGO_URL } from '../assets/images';
 
 export const STORE_INFO = {
   name: "BECCA SHOP",
   tagline: "Qualité • Élégance • Votre style, notre priorité.",
-  logoUrl: "/assets/aistudio/Becca_Shop_Luxury_Fashion_Emblem_4d9ef32f.png",
+  logoUrl: OFFICIAL_LOGO_URL,
   city: "Comé",
   country: "Bénin",
   fullAddress: "Quartier Central, Route Principale, Comé, Bénin",
@@ -25,8 +26,8 @@ export const PRODUCTS: Product[] = [
     price: 38500,
     originalPrice: 45000,
     images: [
-      "/src/assets/images/pagne_super_wax_1794478205336.jpg",
-      "/src/assets/images/pagne_nana_benz_1794478209388.jpg"
+      ASSET_IMAGES.pagneSuperWax,
+      ASSET_IMAGES.pagneNanaBenz
     ],
     category: "pagnes",
     subCategory: "Wax Hollandais Haut de Gamme",
@@ -56,8 +57,8 @@ export const PRODUCTS: Product[] = [
     price: 29500,
     originalPrice: 35000,
     images: [
-      "/src/assets/images/shoes_heels_gold_1794478209254.jpg",
-      "/src/assets/images/shoes_mules_chic_1794478227221.jpg"
+      ASSET_IMAGES.shoesHeelsGold,
+      ASSET_IMAGES.shoesMulesChic
     ],
     category: "chaussures",
     subCategory: "Escarpins de Soirée",
@@ -86,8 +87,8 @@ export const PRODUCTS: Product[] = [
     description: "Une pièce d'exception alliant la noblesse de la soie et la splendeur des motifs wax africains. Tissu ultra fluide, éclat scintillant sous la lumière du jour ou les projecteurs de soirée.",
     price: 48000,
     images: [
-      "/src/assets/images/pagne_soie_wax_1794478209223.jpg",
-      "/src/assets/images/pagne_super_wax_1794478205336.jpg"
+      ASSET_IMAGES.pagneSoieWax,
+      ASSET_IMAGES.pagneSuperWax
     ],
     category: "pagnes",
     subCategory: "Soie Wax & Crêpe de Chine",
@@ -116,8 +117,8 @@ export const PRODUCTS: Product[] = [
     price: 22000,
     originalPrice: 26000,
     images: [
-      "/src/assets/images/shoes_mules_chic_1794478227221.jpg",
-      "/src/assets/images/shoes_heels_gold_1794478209254.jpg"
+      ASSET_IMAGES.shoesMulesChic,
+      ASSET_IMAGES.shoesHeelsGold
     ],
     category: "chaussures",
     subCategory: "Mules & Sandales Plates",
@@ -147,8 +148,8 @@ export const PRODUCTS: Product[] = [
     price: 65000,
     originalPrice: 75000,
     images: [
-      "/src/assets/images/pagne_bazin_riche_1794478206645.jpg",
-      "/src/assets/images/hero_benin_fashion_1794478206307.jpg"
+      ASSET_IMAGES.pagneBazinRiche,
+      ASSET_IMAGES.heroBeninFashion
     ],
     category: "pagnes",
     subCategory: "Bazin Riche & Dentelle",
@@ -177,8 +178,8 @@ export const PRODUCTS: Product[] = [
     description: "Sandales ouvertes à deux brides fines avec talon bloc carré de 6 cm. Stabilité absolue pour marcher avec assurance sur tous types de sols. Finitions dorées et semelle moelleuse.",
     price: 24500,
     images: [
-      "/src/assets/images/shoes_mules_chic_1794478227221.jpg",
-      "/src/assets/images/shoes_heels_gold_1794478209254.jpg"
+      ASSET_IMAGES.shoesMulesChic,
+      ASSET_IMAGES.shoesHeelsGold
     ],
     category: "chaussures",
     subCategory: "Talons Carrés Confort",
@@ -206,8 +207,8 @@ export const PRODUCTS: Product[] = [
     description: "Le grand classique indémodable de la mode féminine africaine réinventé avec des teintes chaudes et des contours dorés subtils. Ce pagne symbolise l'abondance, la beauté et la bénédiction maritale.",
     price: 32000,
     images: [
-      "/src/assets/images/pagne_nana_benz_1794478209388.jpg",
-      "/src/assets/images/pagne_soie_wax_1794478209223.jpg"
+      ASSET_IMAGES.pagneNanaBenz,
+      ASSET_IMAGES.pagneSoieWax
     ],
     category: "pagnes",
     subCategory: "Wax Hollandais Haut de Gamme",
@@ -234,8 +235,8 @@ export const PRODUCTS: Product[] = [
     description: "Le soulier incontournable de la garde-robe d'affaires et de cérémonie. Silhouette fuselée, bout pointu moderne et liseré doré sur la cambrure qui sublime la cheville féminine.",
     price: 27000,
     images: [
-      "/src/assets/images/shoes_heels_gold_1794478209254.jpg",
-      "/src/assets/images/shoes_mules_chic_1794478227221.jpg"
+      ASSET_IMAGES.shoesHeelsGold,
+      ASSET_IMAGES.shoesMulesChic
     ],
     category: "chaussures",
     subCategory: "Escarpins de Soirée",
@@ -293,13 +294,13 @@ export const CATEGORIES = [
     name: "Pagnes Africains",
     subtitle: "Super Wax, Soie Wax, Bazin Riche & Dentelles",
     count: "Plus de 25 modèles",
-    image: "/src/assets/images/pagne_super_wax_1794478205336.jpg"
+    image: ASSET_IMAGES.pagneSuperWax
   },
   {
     id: "chaussures",
     name: "Chaussures Pour Femmes",
     subtitle: "Escarpins de soirée, Mules chic & Talons carrés",
     count: "Pointures 36 à 42",
-    image: "/src/assets/images/shoes_heels_gold_1794478209254.jpg"
+    image: ASSET_IMAGES.shoesHeelsGold
   }
 ];

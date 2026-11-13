@@ -23,6 +23,7 @@ import {
   generateOrderConfirmationEmailHtml,
   generateWelcomeEmailHtml,
 } from '../services/emailService';
+import { OFFICIAL_LOGO_URL, resolveImageUrl } from '../assets/images';
 
 interface StoreContextType {
   // Auth
@@ -113,20 +114,24 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   });
 
-  // 2. Products state with auto-migration to authentic African wax & shoes images
+  // 2. Products state with auto-migration to bundled Benin & Togo imagery
+  const normalizeProductImages = (p: Product): Product => {
+    const seed = SEED_PRODUCTS.find((sp) => sp.id === p.id);
+    if (seed && (!p.images || p.images.length === 0 || p.images.some((img) => img.includes('179334797')))) {
+      return { ...p, images: seed.images };
+    }
+    return {
+      ...p,
+      images: (p.images || []).map((img) => resolveImageUrl(img)).filter(Boolean),
+    };
+  };
+
   const [products, setProducts] = useState<Product[]>(() => {
     try {
       const saved = localStorage.getItem('becca_products');
       if (saved) {
         const parsed: Product[] = JSON.parse(saved);
-        // Automatically migrate any legacy images to new authentic Benin & Togo imagery
-        return parsed.map((p) => {
-          const seed = SEED_PRODUCTS.find((sp) => sp.id === p.id);
-          if (seed && (!p.images || p.images.some((img) => img.includes('179334797')))) {
-            return { ...p, images: seed.images };
-          }
-          return p;
-        });
+        return parsed.map(normalizeProductImages);
       }
       return SEED_PRODUCTS;
     } catch {
@@ -158,7 +163,17 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [orders, setOrders] = useState<OrderDetails[]>(() => {
     try {
       const saved = localStorage.getItem('becca_orders');
-      return saved ? JSON.parse(saved) : SEED_ORDERS;
+      if (saved) {
+        const parsed: OrderDetails[] = JSON.parse(saved);
+        return parsed.map((o) => ({
+          ...o,
+          items: (o.items || []).map((item) => ({
+            ...item,
+            product: normalizeProductImages(item.product),
+          })),
+        }));
+      }
+      return SEED_ORDERS;
     } catch {
       return SEED_ORDERS;
     }
@@ -168,7 +183,14 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     try {
       const saved = localStorage.getItem('becca_cart');
-      return saved ? JSON.parse(saved) : [];
+      if (saved) {
+        const parsed: CartItem[] = JSON.parse(saved);
+        return parsed.map((item) => ({
+          ...item,
+          product: normalizeProductImages(item.product),
+        }));
+      }
+      return [];
     } catch {
       return [];
     }
@@ -178,7 +200,11 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [wishlist, setWishlist] = useState<Product[]>(() => {
     try {
       const saved = localStorage.getItem('becca_wishlist');
-      return saved ? JSON.parse(saved) : [];
+      if (saved) {
+        const parsed: Product[] = JSON.parse(saved);
+        return parsed.map(normalizeProductImages);
+      }
+      return [];
     } catch {
       return [];
     }
@@ -188,7 +214,14 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [settings, setSettings] = useState<SiteSettings>(() => {
     try {
       const saved = localStorage.getItem('becca_settings');
-      return saved ? JSON.parse(saved) : DEFAULT_SETTINGS;
+      if (saved) {
+        const parsed: SiteSettings = JSON.parse(saved);
+        return {
+          ...parsed,
+          logoUrl: resolveImageUrl(parsed.logoUrl, OFFICIAL_LOGO_URL),
+        };
+      }
+      return DEFAULT_SETTINGS;
     } catch {
       return DEFAULT_SETTINGS;
     }
@@ -259,10 +292,24 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     localStorage.setItem('becca_subscribers', JSON.stringify(subscribers));
   }, [subscribers]);
 
+  const hashPassword = async (plain: string): Promise<string> => {
+    if (typeof window !== 'undefined' && window.crypto?.subtle) {
+      const encoded = new TextEncoder().encode(plain);
+      const buffer = await window.crypto.subtle.digest('SHA-256', encoded);
+      return Array.from(new Uint8Array(buffer))
+        .map((b) => b.toString(16).padStart(2, '0'))
+        .join('');
+    }
+    return plain;
+  };
+
   // Auth Methods
   const login = async (email: string, pass: string) => {
+    const passDigest = await hashPassword(pass);
     const found = users.find(
-      (u) => u.email.toLowerCase() === email.toLowerCase() && u.passwordHash === pass
+      (u) =>
+        u.email.toLowerCase() === email.toLowerCase() &&
+        (u.passwordHash === passDigest || u.passwordHash === pass)
     );
     if (!found) {
       return { success: false, message: "Email ou mot de passe incorrect." };
@@ -297,6 +344,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       return { success: false, message: "Un compte existe déjà avec cette adresse email." };
     }
 
+    const passDigest = await hashPassword(data.password);
     const newUser: User & { passwordHash: string } = {
       id: `usr_${Date.now()}`,
       email: data.email.toLowerCase(),
@@ -305,7 +353,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       phone: data.phone,
       city: data.city,
       address: data.address || '',
-      passwordHash: data.password,
+      passwordHash: passDigest,
       role: 'customer',
       emailVerified: true,
       createdAt: new Date().toISOString(),

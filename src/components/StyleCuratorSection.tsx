@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useStore } from '../context/StoreContext';
 import { STORE_INFO } from '../data/products';
+import { ASSET_IMAGES } from '../assets/images';
+import { SafeImage } from './SafeImage';
 import {
   Sparkles,
   Compass,
@@ -35,7 +37,7 @@ const CULTURAL_LOCATIONS: StagingLocation[] = [
     country: 'Bénin',
     flag: '🇧🇯',
     landmark: 'Cotonou, Esplanade Maritime',
-    image: '/src/assets/images/staging_cotonou_marina_1794478709951.jpg',
+    image: ASSET_IMAGES.stagingCotonouMarina,
     description: 'Avenue prestigieuse et modernité architecturale au bord de l\'Atlantique.',
   },
   {
@@ -44,7 +46,7 @@ const CULTURAL_LOCATIONS: StagingLocation[] = [
     country: 'Togo',
     flag: '🇹🇬',
     landmark: 'Lomé, Cœur Historique',
-    image: '/src/assets/images/staging_lome_palais_1794478710819.jpg',
+    image: ASSET_IMAGES.stagingLomePalais,
     description: 'Élégance néo-classique et héritage légendaire des reines du pagne togolais.',
   },
   {
@@ -53,7 +55,7 @@ const CULTURAL_LOCATIONS: StagingLocation[] = [
     country: 'Bénin',
     flag: '🇧🇯',
     landmark: 'Ouidah, Plage Historique',
-    image: '/src/assets/images/staging_ouidah_ocean_1794478711873.jpg',
+    image: ASSET_IMAGES.stagingOuidahOcean,
     description: 'Majesté de l\'océan et mémoire culturelle sacrée des ancêtres béninois.',
   },
   {
@@ -62,7 +64,7 @@ const CULTURAL_LOCATIONS: StagingLocation[] = [
     country: 'Bénin',
     flag: '🇧🇯',
     landmark: 'Comé, Mono (Berceau BECCA)',
-    image: '/src/assets/images/staging_come_mono_1794478712868.jpg',
+    image: ASSET_IMAGES.stagingComeMono,
     description: 'Le terroir de notre boutique physique, entre douceur des lagunes et palmiers.',
   },
 ];
@@ -373,7 +375,7 @@ export const StyleCuratorSection: React.FC = () => {
             {/* Visual Staging Presentation Card */}
             <div className="relative rounded-3xl overflow-hidden border border-[#d4af37]/40 bg-[#12121a] shadow-2xl group">
               <div className="h-80 sm:h-[420px] w-full overflow-hidden relative">
-                <img
+                <SafeImage
                   src={selectedLocation.image}
                   alt={`Mise en situation haute couture à ${selectedLocation.name}`}
                   className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"

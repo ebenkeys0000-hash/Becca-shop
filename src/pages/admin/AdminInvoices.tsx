@@ -9,6 +9,7 @@ import {
   getInvoiceNumber,
 } from '../../services/invoiceService';
 import { STORE_INFO } from '../../data/products';
+import { SafeImage } from '../../components/SafeImage';
 import {
   FileText,
   Download,
@@ -303,9 +304,10 @@ export const AdminInvoices: React.FC = () => {
               <div className="flex items-center justify-between border-b border-[#242436] pb-4">
                 <div className="flex items-center gap-3">
                   <div className="w-11 h-11 rounded-full bg-black border border-[#d4af37]/50 p-1">
-                    <img
+                    <SafeImage
                       src={STORE_INFO.logoUrl}
-                      alt="BECCA SHOP"
+                      alt="Logo BECCA SHOP"
+                      compactFallback
                       className="w-full h-full object-cover rounded-full"
                     />
                   </div>

@@ -4,6 +4,7 @@ import { useStore } from '../../context/StoreContext';
 import { OrderDetails, OrderStatus } from '../../types';
 import { formatFCFA, formatDate } from '../../utils/formatters';
 import { STORE_INFO } from '../../data/products';
+import { SafeImage } from '../../components/SafeImage';
 import {
   ShoppingBag,
   Search,
@@ -204,7 +205,12 @@ export const AdminOrders: React.FC = () => {
               <div className="flex items-center justify-between border-b border-[#242436] pb-4">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-black border border-[#d4af37]/40 p-1">
-                    <img src={STORE_INFO.logoUrl} alt="Logo" className="w-full h-full object-cover rounded-full" />
+                    <SafeImage
+                      src={STORE_INFO.logoUrl}
+                      alt="Logo BECCA SHOP"
+                      compactFallback
+                      className="w-full h-full object-cover rounded-full"
+                    />
                   </div>
                   <div>
                     <h3 className="font-luxury text-lg font-bold text-white">Détail de Commande #{selectedOrder.orderId}</h3>
@@ -245,7 +251,12 @@ export const AdminOrders: React.FC = () => {
                     <div key={idx} className="py-2.5 first:pt-0 last:pb-0 flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-lg bg-black overflow-hidden shrink-0 border border-[#2d2d3e]">
-                          <img src={i.product.images[0]} alt="" className="w-full h-full object-cover" />
+                          <SafeImage
+                            src={i.product.images[0]}
+                            alt={i.product.name}
+                            compactFallback
+                            className="w-full h-full object-cover"
+                          />
                         </div>
                         <div>
                           <div className="font-bold text-white">{i.product.name}</div>

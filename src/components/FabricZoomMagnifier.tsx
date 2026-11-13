@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   ZoomIn,
@@ -11,7 +11,9 @@ import {
   CheckCircle,
   HelpCircle,
   X,
+  ImageOff,
 } from 'lucide-react';
+import { resolveImageUrl } from '../assets/images';
 
 interface FabricZoomMagnifierProps {
   imageSrc: string;
@@ -51,6 +53,15 @@ export const FabricZoomMagnifier: React.FC<FabricZoomMagnifierProps> = ({
   // Fullscreen modal inspection
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [activeHotspot, setActiveHotspot] = useState<Hotspot | null>(null);
+
+  const resolvedSrc = resolveImageUrl(imageSrc);
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const [imgError, setImgError] = useState(!resolvedSrc);
+
+  useEffect(() => {
+    setImgLoaded(false);
+    setImgError(!resolvedSrc);
+  }, [resolvedSrc]);
 
   // Authenticity Hotspots for Beninese & Togolese wax/bazin
   const hotspots: Hotspot[] = [
@@ -174,15 +185,36 @@ export const FabricZoomMagnifier: React.FC<FabricZoomMagnifierProps> = ({
         onTouchMove={handleMouseMove}
         className="relative rounded-3xl overflow-hidden border border-[#2e2e42] bg-[#0d0d12] aspect-[4/3] sm:aspect-square select-none cursor-crosshair group shadow-xl"
       >
-        {/* Base Image */}
-        <img
-          src={imageSrc}
-          alt={altText}
-          className="w-full h-full object-cover select-none pointer-events-none"
-        />
+        {/* Base Image with Loading Shimmer & Fallback */}
+        {imgError || !resolvedSrc ? (
+          <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#16161f] via-[#101016] to-[#0a0a0d] text-center p-6 gap-2.5">
+            <div className="w-12 h-12 rounded-full bg-[#1e1b12] border border-[#d4af37]/30 flex items-center justify-center text-[#e5c158]">
+              <ImageOff className="w-5 h-5" />
+            </div>
+            <span className="text-[11px] uppercase tracking-widest text-[#e5c158] font-bold">
+              BECCA SHOP
+            </span>
+            <span className="text-xs text-[#71717a] max-w-xs line-clamp-2">{altText}</span>
+          </div>
+        ) : (
+          <img
+            src={resolvedSrc}
+            alt={altText}
+            decoding="async"
+            referrerPolicy="no-referrer"
+            onLoad={() => setImgLoaded(true)}
+            onError={() => {
+              setImgError(true);
+              setImgLoaded(true);
+            }}
+            className={`w-full h-full object-cover select-none pointer-events-none transition-opacity duration-300 ${
+              !imgLoaded ? 'bg-[#16161f] animate-pulse' : ''
+            }`}
+          />
+        )}
 
         {/* Specular Light Reflection / Surbrillance Beam tracking cursor */}
-        {goldShimmerActive && isHovered && (
+        {goldShimmerActive && isHovered && !imgError && (
           <div
             className="absolute pointer-events-none transition-opacity duration-150 rounded-full blur-2xl"
             style={{
@@ -198,7 +230,7 @@ export const FabricZoomMagnifier: React.FC<FabricZoomMagnifierProps> = ({
         )}
 
         {/* Circular Magnifier Loupe following cursor on the image */}
-        {isHovered && (
+        {isHovered && !imgError && resolvedSrc && (
           <div
             className="absolute rounded-full border-2 border-[#d4af37] shadow-2xl pointer-events-none overflow-hidden z-20"
             style={{
@@ -214,7 +246,7 @@ export const FabricZoomMagnifier: React.FC<FabricZoomMagnifierProps> = ({
             <div
               className="w-full h-full relative"
               style={{
-                backgroundImage: `url(${imageSrc})`,
+                backgroundImage: `url("${resolvedSrc}")`,
                 backgroundPosition: `${lensPos.xPercent}% ${lensPos.yPercent}%`,
                 backgroundSize: `${zoomLevel * 100}%`,
                 backgroundRepeat: 'no-repeat',
@@ -324,30 +356,37 @@ export const FabricZoomMagnifier: React.FC<FabricZoomMagnifierProps> = ({
                 className="relative flex-1 w-full min-h-[380px] sm:min-h-[460px] rounded-2xl overflow-hidden border border-[#2a2a3e] bg-black select-none cursor-crosshair"
                 onMouseMove={handleMouseMove}
               >
-                <div
-                  className="w-full h-full relative"
-                  style={{
-                    backgroundImage: `url(${imageSrc})`,
-                    backgroundPosition: `${lensPos.xPercent}% ${lensPos.yPercent}%`,
-                    backgroundSize: `${zoomLevel * 140}%`,
-                    backgroundRepeat: 'no-repeat',
-                  }}
-                >
-                  {goldShimmerActive && (
-                    <div
-                      className="absolute pointer-events-none rounded-full blur-3xl"
-                      style={{
-                        left: `${lensPos.xPercent}%`,
-                        top: `${lensPos.yPercent}%`,
-                        width: '280px',
-                        height: '280px',
-                        transform: 'translate(-50%, -50%)',
-                        background: 'radial-gradient(circle, rgba(229,193,88,0.5) 0%, rgba(212,175,55,0.2) 50%, transparent 80%)',
-                        mixBlendMode: 'screen',
-                      }}
-                    />
-                  )}
-                </div>
+                {imgError || !resolvedSrc ? (
+                  <div className="w-full h-full flex flex-col items-center justify-center text-center p-8 gap-3">
+                    <ImageOff className="w-8 h-8 text-[#d4af37]/60" />
+                    <span className="text-xs text-[#a1a1aa]">{altText}</span>
+                  </div>
+                ) : (
+                  <div
+                    className="w-full h-full relative"
+                    style={{
+                      backgroundImage: `url("${resolvedSrc}")`,
+                      backgroundPosition: `${lensPos.xPercent}% ${lensPos.yPercent}%`,
+                      backgroundSize: `${zoomLevel * 140}%`,
+                      backgroundRepeat: 'no-repeat',
+                    }}
+                  >
+                    {goldShimmerActive && (
+                      <div
+                        className="absolute pointer-events-none rounded-full blur-3xl"
+                        style={{
+                          left: `${lensPos.xPercent}%`,
+                          top: `${lensPos.yPercent}%`,
+                          width: '280px',
+                          height: '280px',
+                          transform: 'translate(-50%, -50%)',
+                          background: 'radial-gradient(circle, rgba(229,193,88,0.5) 0%, rgba(212,175,55,0.2) 50%, transparent 80%)',
+                          mixBlendMode: 'screen',
+                        }}
+                      />
+                    )}
+                  </div>
+                )}
 
                 <div className="absolute top-4 left-4 px-3 py-1.5 rounded-xl bg-black/80 backdrop-blur-md border border-[#d4af37]/40 text-xs text-[#e5c158] font-bold">
                   Grossissement Ultra-HD {zoomLevel * 1.4}x

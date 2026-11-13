@@ -2,6 +2,7 @@ import React from 'react';
 import { useStore } from '../../context/StoreContext';
 import { formatFCFA } from '../../utils/formatters';
 import { PackageCheck, Layers, Sparkles, CheckCircle2, ShieldCheck, Truck } from 'lucide-react';
+import { SafeImage } from '../../components/SafeImage';
 
 export const AdminWholesale: React.FC = () => {
   const { products, updateProduct } = useStore();
@@ -86,7 +87,12 @@ export const AdminWholesale: React.FC = () => {
                     <td className="py-3.5 font-bold text-white">
                       <div className="flex items-center gap-2.5">
                         <div className="w-9 h-11 rounded-lg bg-black overflow-hidden shrink-0">
-                          <img src={p.images[0]} alt="" className="w-full h-full object-cover" />
+                          <SafeImage
+                            src={p.images[0]}
+                            alt={p.name}
+                            compactFallback
+                            className="w-full h-full object-cover"
+                          />
                         </div>
                         <div>
                           <div>{p.name}</div>

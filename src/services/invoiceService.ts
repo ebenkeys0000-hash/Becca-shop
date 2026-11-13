@@ -3,6 +3,7 @@ import autoTable from 'jspdf-autotable';
 import { OrderDetails } from '../types';
 import { formatFCFA, formatDate } from '../utils/formatters';
 import { STORE_INFO } from '../data/products';
+import { resolveImageUrl } from '../assets/images';
 
 /**
  * Generate a consistent, sequential or derived invoice number.
@@ -77,7 +78,7 @@ export async function createInvoicePDF(order: OrderDetails): Promise<jsPDF> {
   doc.rect(0, 41.5, pageWidth, 1.5, 'F');
 
   // Try loading logo
-  const logoBase64 = await getBase64ImageFromUrl(STORE_INFO.logoUrl);
+  const logoBase64 = await getBase64ImageFromUrl(resolveImageUrl(STORE_INFO.logoUrl));
   if (logoBase64) {
     try {
       doc.addImage(logoBase64, 'PNG', 14, 6, 28, 28);

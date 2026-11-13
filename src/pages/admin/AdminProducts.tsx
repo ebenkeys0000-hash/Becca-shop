@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useStore } from '../../context/StoreContext';
 import { Product } from '../../types';
 import { formatFCFA } from '../../utils/formatters';
+import { ASSET_IMAGES } from '../../assets/images';
+import { SafeImage } from '../../components/SafeImage';
 import {
   Package,
   Plus,
@@ -38,8 +40,8 @@ export const AdminProducts: React.FC = () => {
     wholesaleMinQty: 5,
     stock: 12,
     reference: '',
-    imageUrl: 'https://images.unsplash.com/photo-1590736969955-71cc94801759?q=80&w=1200&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1590736969955-71cc94801759?q=80&w=1200&auto=format&fit=crop'] as string[],
+    imageUrl: ASSET_IMAGES.pagneSuperWax,
+    images: [ASSET_IMAGES.pagneSuperWax] as string[],
     description: '',
     sizes: 'Pièce 6 Yards, Demi-pièce 3 Yards',
     isNew: true,
@@ -60,8 +62,8 @@ export const AdminProducts: React.FC = () => {
       wholesaleMinQty: 5,
       stock: 12,
       reference: `BS-MOD-${Math.floor(100 + Math.random() * 900)}`,
-      imageUrl: 'https://images.unsplash.com/photo-1590736969955-71cc94801759?q=80&w=1200&auto=format&fit=crop',
-      images: ['https://images.unsplash.com/photo-1590736969955-71cc94801759?q=80&w=1200&auto=format&fit=crop'],
+      imageUrl: ASSET_IMAGES.pagneSuperWax,
+      images: [ASSET_IMAGES.pagneSuperWax],
       description: 'Étoffe prestigieuse aux reflets dorés confectionnée pour les grandes cérémonies et tenues traditionnelles de distinction.',
       sizes: 'Pièce 6 Yards, Demi-pièce 3 Yards',
       isNew: true,
@@ -84,8 +86,8 @@ export const AdminProducts: React.FC = () => {
       wholesaleMinQty: product.wholesaleMinQty || 5,
       stock: product.stock,
       reference: product.reference,
-      imageUrl: product.images[0] || '',
-      images: product.images && product.images.length > 0 ? product.images : [product.images[0] || 'https://images.unsplash.com/photo-1590736969955-71cc94801759?q=80&w=1200&auto=format&fit=crop'],
+      imageUrl: product.images[0] || ASSET_IMAGES.pagneSuperWax,
+      images: product.images && product.images.length > 0 ? product.images : [ASSET_IMAGES.pagneSuperWax],
       description: product.description,
       sizes: product.sizes.join(', '),
       isNew: !!product.isNew,
@@ -243,7 +245,12 @@ export const AdminProducts: React.FC = () => {
                 <td className="py-3.5">
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-14 rounded-xl overflow-hidden bg-black border border-[#29293a] shrink-0">
-                      <img src={product.images[0]} alt="" className="w-full h-full object-cover" />
+                      <SafeImage
+                        src={product.images[0]}
+                        alt={product.name}
+                        compactFallback
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div>
                       <div className="font-bold text-white max-w-xs truncate">{product.name}</div>

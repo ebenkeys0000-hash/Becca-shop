@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { useStore } from '../../context/StoreContext';
 import { generatePasswordResetEmailHtml, createEmailLog } from '../../services/emailService';
 import { STORE_INFO } from '../../data/products';
+import { SafeImage } from '../../components/SafeImage';
 import { Mail, ArrowLeft, CheckCircle2, ShieldCheck, KeyRound } from 'lucide-react';
 
 export const ForgotPasswordPage: React.FC = () => {
@@ -56,9 +57,11 @@ export const ForgotPasswordPage: React.FC = () => {
           </Link>
 
           <div className="mx-auto w-16 h-16 rounded-2xl bg-black border border-[#d4af37]/40 flex items-center justify-center p-2 mb-4 shadow-lg shadow-[#d4af37]/20">
-            <img
+            <SafeImage
               src={STORE_INFO.logoUrl}
-              alt="BECCA SHOP"
+              alt="Logo BECCA SHOP"
+              priority
+              compactFallback
               className="w-full h-full object-cover rounded-full"
             />
           </div>
@@ -108,7 +111,7 @@ export const ForgotPasswordPage: React.FC = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="ex: clarisse@gmail.com"
+                  placeholder="ex: nom@exemple.com"
                   className="w-full pl-10 pr-4 py-3 bg-[#171720] border border-[#2e2e40] rounded-xl text-white text-xs placeholder-[#71717a] outline-none focus:border-[#e5c158] transition-colors"
                 />
               </div>

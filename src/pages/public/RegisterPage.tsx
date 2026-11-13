@@ -3,6 +3,7 @@ import { useLocation, Link } from 'wouter';
 import { useStore } from '../../context/StoreContext';
 import { User, Mail, Lock, Phone, MapPin, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { STORE_INFO } from '../../data/products';
+import { SafeImage } from '../../components/SafeImage';
 
 export const RegisterPage: React.FC = () => {
   const [, setLocation] = useLocation();
@@ -65,9 +66,11 @@ export const RegisterPage: React.FC = () => {
         {/* Brand Header */}
         <div className="text-center space-y-2">
           <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-[#d4af37] mx-auto shadow-xl bg-black">
-            <img
+            <SafeImage
               src={STORE_INFO.logoUrl}
               alt="Logo BECCA SHOP"
+              priority
+              compactFallback
               className="w-full h-full object-cover"
             />
           </div>
@@ -141,7 +144,7 @@ export const RegisterPage: React.FC = () => {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="clarisse@gmail.com"
+                    placeholder="nom@exemple.com"
                     className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-[#181822] border border-[#2b2b38] text-white text-xs outline-none focus:border-[#e5c158] transition-colors"
                   />
                 </div>

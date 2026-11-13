@@ -3,6 +3,7 @@ import { Link, useLocation } from 'wouter';
 import { motion } from 'motion/react';
 import { useStore } from '../../context/StoreContext';
 import { formatFCFA } from '../../utils/formatters';
+import { SafeImage } from '../../components/SafeImage';
 import {
   ShoppingBag,
   Trash2,
@@ -137,9 +138,10 @@ export const CartPage: React.FC = () => {
                       {/* Product Thumbnail & Details */}
                       <div className="flex items-center gap-4">
                         <div className="w-20 h-24 rounded-xl overflow-hidden bg-black border border-[#2a2a3a] shrink-0">
-                          <img
+                          <SafeImage
                             src={item.product.images[0]}
                             alt={item.product.name}
+                            compactFallback
                             className="w-full h-full object-cover"
                           />
                         </div>

@@ -4,6 +4,7 @@ import { CartItem } from '../types';
 import { formatFCFA } from '../utils/formatters';
 import { X, Trash2, ShoppingBag, ArrowRight, ShieldCheck } from 'lucide-react';
 import { overlayVariants, drawerVariants } from '../utils/motion';
+import { SafeImage } from './SafeImage';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -116,11 +117,11 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                       >
                         {/* Thumbnail */}
                         <div className="w-20 h-20 rounded-xl overflow-hidden bg-[#1f1f2a] shrink-0 border border-[#2c2c3a]">
-                          <img
+                          <SafeImage
                             src={item.product.images[0]}
                             alt={item.product.name}
+                            compactFallback
                             className="w-full h-full object-cover object-center"
-                            referrerPolicy="no-referrer"
                           />
                         </div>
 

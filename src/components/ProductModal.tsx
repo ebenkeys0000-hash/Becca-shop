@@ -6,6 +6,7 @@ import { STORE_INFO } from '../data/products';
 import { X, Heart, ShoppingBag, MessageCircle, Check, Truck, ShieldCheck, MapPin } from 'lucide-react';
 import { FabricZoomMagnifier } from './FabricZoomMagnifier';
 import { overlayVariants, modalVariants } from '../utils/motion';
+import { SafeImage } from './SafeImage';
 
 interface ProductModalProps {
   product: Product | null;
@@ -101,11 +102,11 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                           : 'border-transparent opacity-60 hover:opacity-100'
                       }`}
                     >
-                      <img
+                      <SafeImage
                         src={img}
                         alt={`Vue miniature ${idx + 1}`}
+                        compactFallback
                         className="w-full h-full object-cover"
-                        referrerPolicy="no-referrer"
                       />
                     </motion.button>
                   ))}

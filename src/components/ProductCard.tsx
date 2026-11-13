@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'motion/react';
 import { Product } from '../types';
 import { formatFCFA } from '../utils/formatters';
-import { Heart, ShoppingBag, Eye, MessageCircle, Check } from 'lucide-react';
+import { Heart, ShoppingBag, Eye, MessageCircle, Check, ImageOff } from 'lucide-react';
+import { resolveImageUrl } from '../assets/images';
 
 interface ProductCardProps {
   product: Product;
@@ -22,6 +23,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const [isHovered, setIsHovered] = useState(false);
   const [addedDirectly, setAddedDirectly] = useState(false);
 
+  const primarySrc = resolveImageUrl(product.images?.[0]);
+  const rawSecondary = product.images && product.images.length > 1 ? resolveImageUrl(product.images[1]) : '';
+  const hasSecondaryImage = Boolean(rawSecondary);
+
+  const [primaryLoaded, setPrimaryLoaded] = useState(false);
+  const [primaryError, setPrimaryError] = useState(!primarySrc);
+  const [secondaryError, setSecondaryError] = useState(!rawSecondary);
+
+  useEffect(() => {
+    setPrimaryLoaded(false);
+    setPrimaryError(!primarySrc);
+    setSecondaryError(!rawSecondary);
+  }, [primarySrc, rawSecondary]);
+
   const defaultSize = product.sizes && product.sizes.length > 0 ? product.sizes[0] : '';
   const defaultColor = product.colors && product.colors.length > 0 ? product.colors[0].name : undefined;
 
@@ -31,8 +46,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     setAddedDirectly(true);
     setTimeout(() => setAddedDirectly(false), 1600);
   };
-
-  const hasSecondaryImage = product.images.length > 1;
 
   return (
     <motion.div
@@ -48,23 +61,43 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       {/* Visual Asset Container with Secondary Image on Hover */}
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#16161e]">
         {/* Primary Image */}
-        <motion.img
-          src={product.images[0]}
-          alt={product.name}
-          animate={{
-            opacity: hasSecondaryImage && isHovered ? 0 : 1,
-            scale: isHovered ? 1.08 : 1,
-          }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full h-full object-cover object-center absolute inset-0"
-          referrerPolicy="no-referrer"
-          loading="lazy"
-        />
+        {primaryError || !primarySrc ? (
+          <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#16161f] via-[#101016] to-[#0a0a0d] text-center p-4 gap-2 absolute inset-0">
+            <div className="w-10 h-10 rounded-full bg-[#1e1b12] border border-[#d4af37]/30 flex items-center justify-center text-[#e5c158]">
+              <ImageOff className="w-4 h-4" />
+            </div>
+            <span className="text-[10px] uppercase tracking-widest text-[#e5c158] font-semibold">
+              BECCA SHOP
+            </span>
+            <span className="text-[11px] text-[#71717a] line-clamp-2">{product.name}</span>
+          </div>
+        ) : (
+          <motion.img
+            src={primarySrc}
+            alt={product.name}
+            animate={{
+              opacity: hasSecondaryImage && !secondaryError && isHovered ? 0 : 1,
+              scale: isHovered ? 1.08 : 1,
+            }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            onLoad={() => setPrimaryLoaded(true)}
+            onError={() => {
+              setPrimaryError(true);
+              setPrimaryLoaded(true);
+            }}
+            className={`w-full h-full object-cover object-center absolute inset-0 ${
+              !primaryLoaded ? 'bg-[#16161f] animate-pulse' : ''
+            }`}
+            referrerPolicy="no-referrer"
+            loading="lazy"
+            decoding="async"
+          />
+        )}
 
         {/* Secondary Image on Hover (fades in smoothly) */}
-        {hasSecondaryImage && (
+        {hasSecondaryImage && !secondaryError && rawSecondary && (
           <motion.img
-            src={product.images[1]}
+            src={rawSecondary}
             alt={`${product.name} vue alternative`}
             initial={{ opacity: 0 }}
             animate={{
@@ -72,9 +105,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               scale: isHovered ? 1.05 : 1,
             }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            onError={() => setSecondaryError(true)}
             className="w-full h-full object-cover object-center absolute inset-0"
             referrerPolicy="no-referrer"
             loading="lazy"
+            decoding="async"
           />
         )}
 

@@ -5,6 +5,7 @@ import { formatFCFA } from '../utils/formatters';
 import { X, ShieldCheck, MapPin, User, CheckCircle2 } from 'lucide-react';
 import { STORE_INFO } from '../data/products';
 import { overlayVariants, modalVariants } from '../utils/motion';
+import { SafeImage } from './SafeImage';
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -111,9 +112,10 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             <div className="p-5 border-b border-[#242432] flex items-center justify-between bg-[#15151c]">
               <div className="flex items-center gap-3.5">
                 <div className="w-11 h-11 rounded-full overflow-hidden border border-[#d4af37]/60 shrink-0 bg-black shadow-md">
-                  <img
+                  <SafeImage
                     src={STORE_INFO.logoUrl}
                     alt="Logo BECCA SHOP"
+                    compactFallback
                     className="w-full h-full object-cover"
                   />
                 </div>

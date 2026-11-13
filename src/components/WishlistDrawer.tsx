@@ -4,6 +4,7 @@ import { Product } from '../types';
 import { formatFCFA } from '../utils/formatters';
 import { X, Heart, ShoppingBag, Trash2 } from 'lucide-react';
 import { overlayVariants, drawerVariants } from '../utils/motion';
+import { SafeImage } from './SafeImage';
 
 interface WishlistDrawerProps {
   isOpen: boolean;
@@ -87,11 +88,11 @@ export const WishlistDrawer: React.FC<WishlistDrawerProps> = ({
                         className="p-3.5 rounded-2xl bg-[#15151e] border border-[#242432] flex gap-3.5 items-center shadow-sm"
                       >
                         <div className="w-16 h-16 rounded-xl overflow-hidden bg-[#1f1f2a] shrink-0 border border-[#2b2b38]">
-                          <img
+                          <SafeImage
                             src={item.images[0]}
                             alt={item.name}
+                            compactFallback
                             className="w-full h-full object-cover"
-                            referrerPolicy="no-referrer"
                           />
                         </div>
 

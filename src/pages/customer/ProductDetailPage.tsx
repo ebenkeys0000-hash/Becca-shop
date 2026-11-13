@@ -6,6 +6,7 @@ import { formatFCFA } from '../../utils/formatters';
 import { STORE_INFO } from '../../data/products';
 import { ProductCard } from '../../components/ProductCard';
 import { FabricZoomMagnifier } from '../../components/FabricZoomMagnifier';
+import { SafeImage } from '../../components/SafeImage';
 import {
   ShoppingBag,
   Heart,
@@ -165,7 +166,12 @@ export const ProductDetailPage: React.FC = () => {
                         : 'border-[#262635] opacity-60 hover:opacity-100'
                     }`}
                   >
-                    <img src={img} alt="" className="w-full h-full object-cover" />
+                    <SafeImage
+                      src={img}
+                      alt={`${product.name} - vue ${idx + 1}`}
+                      compactFallback
+                      className="w-full h-full object-cover"
+                    />
                   </button>
                 ))}
               </div>

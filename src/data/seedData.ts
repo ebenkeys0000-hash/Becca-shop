@@ -1,10 +1,11 @@
 import { Product, Promotion, User, OrderDetails, SiteSettings } from '../types';
 import { PRODUCTS } from './products';
+import { OFFICIAL_LOGO_URL } from '../assets/images';
 
 export const DEFAULT_SETTINGS: SiteSettings = {
   storeName: "BECCA SHOP",
   tagline: "Qualité • Élégance • Votre style, notre priorité.",
-  logoUrl: "/assets/aistudio/Becca_Shop_Luxury_Fashion_Emblem_4d9ef32f.png",
+  logoUrl: OFFICIAL_LOGO_URL,
   city: "Comé",
   fullAddress: "Quartier Central, Route Principale, Comé, Bénin",
   phone1: "+22995441602",
@@ -24,7 +25,7 @@ export const SEED_USERS: (User & { passwordHash: string })[] = [
   {
     id: "usr_admin_001",
     email: "admin@beccashop.bj",
-    passwordHash: "Admin@Becca2026!",
+    passwordHash: "1098a9988ed4d9f380de5ff36fdbe5990676f791af89e0b89ca22c065fcbf345",
     firstName: "Béatrice",
     lastName: "Directrice",
     phone: "+22995441602",
@@ -37,7 +38,7 @@ export const SEED_USERS: (User & { passwordHash: string })[] = [
   {
     id: "usr_cust_001",
     email: "clarisse@gmail.com",
-    passwordHash: "Clari@2026",
+    passwordHash: "2ad00b0fdd99b68d6ec23fb3c2414ba267f55561da89cc1da0aeca6decb890da",
     firstName: "Clarisse",
     lastName: "Agbodjan",
     phone: "+22997123456",

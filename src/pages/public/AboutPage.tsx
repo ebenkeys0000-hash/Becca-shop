@@ -3,6 +3,8 @@ import { motion } from 'motion/react';
 import { STORE_INFO } from '../../data/products';
 import { Award, HeartHandshake, MapPin, Sparkles, CheckCircle, Phone, MessageCircle } from 'lucide-react';
 import { Link } from 'wouter';
+import { ASSET_IMAGES } from '../../assets/images';
+import { SafeImage } from '../../components/SafeImage';
 
 export const AboutPage: React.FC = () => {
   return (
@@ -57,8 +59,8 @@ export const AboutPage: React.FC = () => {
 
           <div className="lg:col-span-6">
             <div className="relative rounded-3xl overflow-hidden border border-[#d4af37]/40 bg-[#16161f] shadow-2xl">
-              <img
-                src="/src/assets/images/hero_benin_fashion_1794478206307.jpg"
+              <SafeImage
+                src={ASSET_IMAGES.heroBeninFashion}
                 alt="Haute couture béninoise en Super Wax authentique chez BECCA SHOP"
                 className="w-full h-[450px] object-cover"
               />

@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { CATEGORIES } from '../data/products';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import { SafeImage } from './SafeImage';
 
 interface CategoryShowcaseProps {
   onSelectCategory: (category: 'pagnes' | 'chaussures') => void;
@@ -51,11 +52,10 @@ export const CategoryShowcase: React.FC<CategoryShowcaseProps> = ({ onSelectCate
               className="group relative cursor-pointer overflow-hidden rounded-3xl bg-[#13131a] border border-[#262635] hover:border-[#d4af37]/60 transition-colors duration-500 shadow-2xl"
             >
               <div className="h-80 sm:h-96 w-full overflow-hidden relative">
-                <img
+                <SafeImage
                   src={cat.image}
                   alt={cat.name}
                   className="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-700 ease-out"
-                  referrerPolicy="no-referrer"
                 />
                 {/* Dark gradient scrim */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#09090d] via-[#09090d]/50 to-transparent" />

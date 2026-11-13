@@ -6,6 +6,7 @@ import { STORE_INFO } from '../data/products';
 import { MessageCircle, Printer, ArrowRight, X, Download } from 'lucide-react';
 import { overlayVariants, modalVariants } from '../utils/motion';
 import { downloadInvoicePDF } from '../services/invoiceService';
+import { SafeImage } from './SafeImage';
 
 interface OrderSuccessModalProps {
   order: OrderDetails | null;
@@ -60,9 +61,10 @@ export const OrderSuccessModal: React.FC<OrderSuccessModalProps> = ({
               transition={{ type: 'spring', stiffness: 380, damping: 20, delay: 0.15 }}
               className="w-18 h-18 rounded-full overflow-hidden border-2 border-[#d4af37] mx-auto shadow-xl shadow-[#d4af37]/25 mb-3 bg-black"
             >
-              <img
+              <SafeImage
                 src={STORE_INFO.logoUrl}
                 alt="Logo BECCA SHOP"
+                compactFallback
                 className="w-full h-full object-cover"
               />
             </motion.div>

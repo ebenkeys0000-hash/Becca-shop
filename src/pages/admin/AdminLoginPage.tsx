@@ -3,6 +3,7 @@ import { useLocation, Link } from 'wouter';
 import { motion, AnimatePresence } from 'motion/react';
 import { useStore } from '../../context/StoreContext';
 import { STORE_INFO } from '../../data/products';
+import { SafeImage } from '../../components/SafeImage';
 import {
   Lock,
   Mail,
@@ -11,12 +12,10 @@ import {
   ShieldCheck,
   ShieldAlert,
   ArrowRight,
-  Sparkles,
   KeyRound,
   CheckCircle2,
   RefreshCw,
   Store,
-  HelpCircle,
 } from 'lucide-react';
 
 interface AdminLoginPageProps {
@@ -35,13 +34,6 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onSuccess }) => 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successNotice, setSuccessNotice] = useState(false);
-
-  // Auto-fill demo credentials for the administrator
-  const handleFillDemoAdmin = () => {
-    setEmail('admin@beccashop.bj');
-    setPassword('Admin@Becca2026!');
-    setErrorMessage('');
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -89,9 +81,11 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onSuccess }) => 
         <div className="text-center space-y-3">
           <div className="relative inline-block">
             <div className="w-20 h-20 rounded-full bg-black border-2 border-[#d4af37] p-1.5 mx-auto shadow-xl shadow-[#d4af37]/20">
-              <img
+              <SafeImage
                 src={STORE_INFO.logoUrl}
-                alt="BECCA SHOP"
+                alt="Logo BECCA SHOP"
+                priority
+                compactFallback
                 className="w-full h-full object-cover rounded-full"
               />
             </div>
@@ -154,7 +148,7 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onSuccess }) => 
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@beccashop.bj"
+                placeholder="nom@beccashop.bj"
                 className="w-full pl-10 pr-4 py-3 bg-[#181824] border border-[#2d2d40] rounded-2xl text-xs sm:text-sm text-white placeholder-[#71717a] outline-none focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]/50 transition-all font-mono"
               />
             </div>
@@ -188,7 +182,7 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onSuccess }) => 
             </div>
           </div>
 
-          {/* Remember me & Demo help */}
+          {/* Remember me */}
           <div className="flex items-center justify-between text-xs pt-1">
             <label className="flex items-center gap-2 text-[#a1a1aa] cursor-pointer">
               <input
@@ -199,16 +193,6 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onSuccess }) => 
               />
               <span>Mémoriser ma session</span>
             </label>
-
-            <button
-              type="button"
-              onClick={handleFillDemoAdmin}
-              className="text-[#e5c158] hover:underline font-semibold text-[11px] flex items-center gap-1"
-              title="Pré-remplir les identifiants de la direction"
-            >
-              <Sparkles className="w-3 h-3 text-[#e5c158]" />
-              <span>Identifiants démo</span>
-            </button>
           </div>
 
           {/* Submit Button */}
@@ -233,27 +217,6 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onSuccess }) => 
             )}
           </motion.button>
         </form>
-
-        {/* Security Credentials Assistance Box */}
-        <div className="p-3.5 rounded-2xl bg-[#161622] border border-[#272738] text-[11px] space-y-1.5">
-          <div className="flex items-center justify-between text-[#a1a1aa]">
-            <span className="font-semibold text-white flex items-center gap-1.5">
-              <KeyRound className="w-3.5 h-3.5 text-[#e5c158]" />
-              <span>Accès d'Administration Officiel :</span>
-            </span>
-            <button
-              type="button"
-              onClick={handleFillDemoAdmin}
-              className="text-[10px] text-[#e5c158] font-bold uppercase underline"
-            >
-              Remplir
-            </button>
-          </div>
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[#71717a] font-mono text-[10px]">
-            <span>Email : <strong className="text-[#d4d4d8]">admin@beccashop.bj</strong></span>
-            <span>Pass : <strong className="text-[#d4d4d8]">Admin@Becca2026!</strong></span>
-          </div>
-        </div>
 
         {/* Return to Public Website */}
         <div className="pt-2 text-center border-t border-[#1e1e2d]">

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'wouter';
 import { STORE_INFO } from '../data/products';
 import { Phone, MessageCircle, MapPin, Mail, ArrowUp, Lock } from 'lucide-react';
+import { SafeImage } from './SafeImage';
 
 interface FooterProps {
   onSelectCategory: (category: 'all' | 'pagnes' | 'chaussures') => void;
@@ -22,9 +23,10 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
           <div className="lg:col-span-4 space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-full overflow-hidden border border-[#d4af37]/60 shadow-lg bg-black shrink-0">
-                <img
+                <SafeImage
                   src={STORE_INFO.logoUrl}
                   alt="Logo Officiel BECCA SHOP"
+                  compactFallback
                   className="w-full h-full object-cover"
                 />
               </div>

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useLocation, Link } from 'wouter';
 import { useStore } from '../../context/StoreContext';
-import { Lock, Mail, ArrowRight, ShieldCheck, Sparkles, UserCheck } from 'lucide-react';
+import { Lock, Mail, ArrowRight } from 'lucide-react';
 import { STORE_INFO } from '../../data/products';
+import { SafeImage } from '../../components/SafeImage';
 
 export const LoginPage: React.FC = () => {
   const [, setLocation] = useLocation();
@@ -37,23 +38,6 @@ export const LoginPage: React.FC = () => {
     }
   };
 
-  // Demo Login Quick Fillers
-  const handleQuickDemoCustomer = async () => {
-    setEmail('clarisse@gmail.com');
-    setPassword('Clari@2026');
-    setLoading(true);
-    await login('clarisse@gmail.com', 'Clari@2026');
-    setLoading(false);
-  };
-
-  const handleQuickDemoAdmin = async () => {
-    setEmail('admin@beccashop.bj');
-    setPassword('Admin@Becca2026!');
-    setLoading(true);
-    await login('admin@beccashop.bj', 'Admin@Becca2026!');
-    setLoading(false);
-  };
-
   return (
     <div className="py-16 bg-[#0a0a0d] min-h-[85vh] flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-[#121218] border border-[#d4af37]/40 rounded-3xl shadow-2xl p-8 space-y-6">
@@ -61,9 +45,11 @@ export const LoginPage: React.FC = () => {
         {/* Brand Lockup */}
         <div className="text-center space-y-2">
           <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-[#d4af37] mx-auto shadow-xl bg-black">
-            <img
+            <SafeImage
               src={STORE_INFO.logoUrl}
               alt="Logo BECCA SHOP"
+              priority
+              compactFallback
               className="w-full h-full object-cover"
             />
           </div>
@@ -129,31 +115,6 @@ export const LoginPage: React.FC = () => {
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>
-
-        {/* Demo Fast Login Buttons for Instant Review */}
-        <div className="pt-2 border-t border-[#22222f] space-y-2">
-          <p className="text-[11px] text-center text-[#71717a]">
-            Comptes de démonstration pré-configurés :
-          </p>
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={handleQuickDemoCustomer}
-              className="py-2 px-2.5 rounded-lg bg-[#1a1a24] hover:bg-[#232332] border border-[#2d2d3e] text-[11px] text-white flex items-center justify-center gap-1.5 transition-colors"
-            >
-              <UserCheck className="w-3.5 h-3.5 text-[#e5c158]" />
-              <span>Cliente Démo</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setLocation('/admin/login')}
-              className="py-2 px-2.5 rounded-lg bg-[#1e1a12] hover:bg-[#282216] border border-[#d4af37]/40 text-[11px] text-[#e5c158] font-semibold flex items-center justify-center gap-1.5 transition-colors"
-            >
-              <ShieldCheck className="w-3.5 h-3.5 text-[#e5c158]" />
-              <span>Portail Admin</span>
-            </button>
-          </div>
-        </div>
 
         {/* Register Link */}
         <div className="text-center pt-2 text-xs text-[#a1a1aa]">

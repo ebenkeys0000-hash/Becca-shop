@@ -17,6 +17,7 @@ import {
 import { STORE_INFO } from '../data/products';
 import { formatFCFA } from '../utils/formatters';
 import { useStore } from '../context/StoreContext';
+import { SafeImage } from './SafeImage';
 
 interface NavbarProps {
   cartCount: number;
@@ -120,9 +121,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             {/* Official BECCA SHOP Emblem Logo */}
             <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full overflow-hidden border border-[#d4af37]/60 shadow-lg shadow-[#d4af37]/20 group-hover:border-[#e5c158] transition-all bg-black shrink-0">
-              <img
+              <SafeImage
                 src={STORE_INFO.logoUrl}
                 alt="Logo Officiel BECCA SHOP"
+                priority
+                compactFallback
                 className="w-full h-full object-cover"
               />
             </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'wouter';
 import { useStore } from '../../context/StoreContext';
 import { STORE_INFO } from '../../data/products';
+import { SafeImage } from '../../components/SafeImage';
 import {
   LayoutDashboard,
   Package,
@@ -16,8 +17,6 @@ import {
   FileText,
   LogOut,
   ExternalLink,
-  ShieldAlert,
-  ArrowRight,
   Menu,
   X,
 } from 'lucide-react';
@@ -58,7 +57,13 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       <div className="md:hidden bg-[#0e0e14] border-b border-[#222230] p-4 flex items-center justify-between sticky top-0 z-50">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full overflow-hidden border border-[#d4af37]">
-            <img src={STORE_INFO.logoUrl} alt="Logo" className="w-full h-full object-cover" />
+            <SafeImage
+              src={STORE_INFO.logoUrl}
+              alt="Logo BECCA SHOP"
+              priority
+              compactFallback
+              className="w-full h-full object-cover"
+            />
           </div>
           <span className="font-luxury font-bold text-sm text-white">BECCA Admin</span>
         </div>
@@ -80,7 +85,13 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           {/* Logo & Store Info */}
           <div className="flex items-center gap-3 pb-5 border-b border-[#20202d]">
             <div className="w-10 h-10 rounded-full overflow-hidden border border-[#d4af37]/60 p-0.5 bg-black shrink-0">
-              <img src={STORE_INFO.logoUrl} alt="Logo" className="w-full h-full object-cover rounded-full" />
+              <SafeImage
+                src={STORE_INFO.logoUrl}
+                alt="Logo BECCA SHOP"
+                priority
+                compactFallback
+                className="w-full h-full object-cover rounded-full"
+              />
             </div>
             <div>
               <div className="font-luxury font-bold text-sm text-white tracking-wide">

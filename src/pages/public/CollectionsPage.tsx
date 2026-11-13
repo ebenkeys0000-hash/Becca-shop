@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'wouter';
 import { CATEGORIES } from '../../data/products';
 import { Sparkles, ArrowRight } from 'lucide-react';
+import { SafeImage } from '../../components/SafeImage';
 
 export const CollectionsPage: React.FC = () => {
   return (
@@ -27,7 +28,7 @@ export const CollectionsPage: React.FC = () => {
               className="group relative overflow-hidden rounded-3xl bg-[#13131b] border border-[#272736] hover:border-[#d4af37]/60 transition-all shadow-xl"
             >
               <div className="h-80 sm:h-96 w-full overflow-hidden relative">
-                <img
+                <SafeImage
                   src={cat.image}
                   alt={cat.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"

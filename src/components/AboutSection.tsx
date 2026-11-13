@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { STORE_INFO } from '../data/products';
 import { Award, HeartHandshake, Sparkles, MapPin, Phone, ArrowUpRight } from 'lucide-react';
+import { SafeImage } from './SafeImage';
 
 export const AboutSection: React.FC = () => {
   return (
@@ -99,9 +100,10 @@ export const AboutSection: React.FC = () => {
                   whileHover={{ rotate: 5, scale: 1.05 }}
                   className="w-16 h-16 rounded-full overflow-hidden border-2 border-[#d4af37] shadow-xl shrink-0 bg-black"
                 >
-                  <img
+                  <SafeImage
                     src={STORE_INFO.logoUrl}
                     alt="Logo Officiel BECCA SHOP"
+                    compactFallback
                     className="w-full h-full object-cover"
                   />
                 </motion.div>

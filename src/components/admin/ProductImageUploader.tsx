@@ -16,6 +16,7 @@ import {
   FolderOpen,
 } from 'lucide-react';
 import { validateImageFile, compressImageFile, persistImageInDB } from '../../services/imageStorageService';
+import { SafeImage } from '../SafeImage';
 
 interface ProductImageUploaderProps {
   images: string[];
@@ -350,9 +351,10 @@ export const ProductImageUploader: React.FC<ProductImageUploaderProps> = ({
                     isPrimary ? 'border-[#e5c158] shadow-[#e5c158]/20' : 'border-[#262638]'
                   }`}
                 >
-                  <img
+                  <SafeImage
                     src={imgUrl}
                     alt={`Photo ${index + 1}`}
+                    compactFallback
                     className="w-full h-full object-cover"
                   />
 

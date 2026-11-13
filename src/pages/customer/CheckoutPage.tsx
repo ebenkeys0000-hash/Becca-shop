@@ -5,6 +5,7 @@ import { useStore } from '../../context/StoreContext';
 import { formatFCFA } from '../../utils/formatters';
 import { STORE_INFO } from '../../data/products';
 import { OrderDetails } from '../../types';
+import { SafeImage } from '../../components/SafeImage';
 import {
   ShieldCheck,
   CheckCircle2,
@@ -180,7 +181,12 @@ export const CheckoutPage: React.FC = () => {
                   <div key={idx} className="py-2.5 first:pt-0 last:pb-0 flex items-center justify-between text-xs">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-lg bg-black overflow-hidden shrink-0">
-                        <img src={i.product.images[0]} alt="" className="w-full h-full object-cover" />
+                        <SafeImage
+                          src={i.product.images[0]}
+                          alt={i.product.name}
+                          compactFallback
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                       <div>
                         <div className="font-medium text-white">{i.product.name}</div>
@@ -334,7 +340,7 @@ export const CheckoutPage: React.FC = () => {
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="clarisse@gmail.com"
+                      placeholder="nom@exemple.com"
                       className="w-full px-4 py-3 bg-[#181822] border border-[#2b2b3c] rounded-xl text-white text-xs outline-none focus:border-[#e5c158] transition-colors"
                     />
                   </div>
@@ -535,7 +541,12 @@ export const CheckoutPage: React.FC = () => {
                     <div key={item.id} className="flex items-center justify-between text-xs">
                       <div className="flex items-center gap-2.5">
                         <div className="w-8 h-8 rounded-lg overflow-hidden bg-black shrink-0">
-                          <img src={item.product.images[0]} alt="" className="w-full h-full object-cover" />
+                          <SafeImage
+                            src={item.product.images[0]}
+                            alt={item.product.name}
+                            compactFallback
+                            className="w-full h-full object-cover"
+                          />
                         </div>
                         <div>
                           <div className="font-medium text-white line-clamp-1">{item.product.name}</div>

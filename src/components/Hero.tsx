@@ -3,6 +3,8 @@ import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react'
 import { Sparkles, MessageCircle, ArrowRight, ShieldCheck, Truck, Headphones } from 'lucide-react';
 import { STORE_INFO } from '../data/products';
 import { wordRevealContainer, wordItem, transitionLuxury } from '../utils/motion';
+import { ASSET_IMAGES } from '../assets/images';
+import { SafeImage } from './SafeImage';
 
 interface HeroProps {
   onExploreCatalog: () => void;
@@ -177,11 +179,11 @@ export const Hero: React.FC<HeroProps> = ({ onExploreCatalog, onFilterCategory }
                   style={{ y: imageY, scale: imageScale }}
                   className="w-full h-full"
                 >
-                  <img
-                    src="/src/assets/images/hero_benin_fashion_1794478206307.jpg"
+                  <SafeImage
+                    src={ASSET_IMAGES.heroBeninFashion}
                     alt="Haute couture béninoise en Super Wax authentique chez BECCA SHOP à Comé"
+                    priority
                     className="w-full h-[440px] sm:h-[500px] lg:h-[540px] object-cover object-top transition-transform duration-700"
-                    referrerPolicy="no-referrer"
                   />
                 </motion.div>
 
@@ -223,9 +225,11 @@ export const Hero: React.FC<HeroProps> = ({ onExploreCatalog, onFilterCategory }
                 }}
                 className="absolute -top-3 -right-3 sm:-top-5 sm:-right-5 w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-[#d4af37] shadow-2xl shadow-black/90 bg-black z-20"
               >
-                <img
+                <SafeImage
                   src={STORE_INFO.logoUrl}
                   alt="Emblème Officiel BECCA SHOP"
+                  priority
+                  compactFallback
                   className="w-full h-full object-cover"
                 />
               </motion.div>

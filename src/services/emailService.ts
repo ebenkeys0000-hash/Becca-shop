@@ -1,7 +1,8 @@
 import { EmailLog, OrderDetails, User } from '../types';
 import { formatFCFA } from '../utils/formatters';
+import { OFFICIAL_LOGO_URL } from '../assets/images';
 
-const LOGO_URL = "/assets/aistudio/Becca_Shop_Luxury_Fashion_Emblem_4d9ef32f.png";
+const LOGO_URL = OFFICIAL_LOGO_URL;
 
 /**
  * Generates the official luxury Welcome Email HTML for BECCA SHOP

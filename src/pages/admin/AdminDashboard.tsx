@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'wouter';
 import { useStore } from '../../context/StoreContext';
 import { formatFCFA, formatDate } from '../../utils/formatters';
+import { SafeImage } from '../../components/SafeImage';
 import {
   TrendingUp,
   ShoppingBag,
@@ -223,7 +224,12 @@ export const AdminDashboard: React.FC = () => {
                 >
                   <div className="flex items-center gap-2.5">
                     <div className="w-10 h-10 rounded-lg bg-black overflow-hidden shrink-0">
-                      <img src={p.images[0]} alt="" className="w-full h-full object-cover" />
+                      <SafeImage
+                        src={p.images[0]}
+                        alt={p.name}
+                        compactFallback
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div>
                       <div className="font-bold text-white line-clamp-1">{p.name}</div>
